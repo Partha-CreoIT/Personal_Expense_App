@@ -3,6 +3,7 @@ import 'package:personal_expense_app/model/new_expense.dart';
 import 'package:personal_expense_app/widgets/expenses_list/expenses_list.dart';
 
 import '../model/expense.dart';
+import 'chart/chart.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -65,8 +66,10 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Flutter Expense Tracker'),
         actions: [
           IconButton(
             onPressed: () {
@@ -76,8 +79,10 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
+      body: width < 600 ? Column(
+
         children: [
+          Chart(expenses:_registeredExpense),
           Expanded(
             child: ExpensesList(
               expenses: _registeredExpense,
@@ -85,7 +90,16 @@ class _ExpensesState extends State<Expenses> {
             ),
           ),
         ],
-      ),
+      ) : Row(children: [
+        Expanded(child: Chart(expenses:_registeredExpense)),
+        Expanded(
+          child: ExpensesList(
+            expenses: _registeredExpense,
+            onRemoveExpense: _removeExpense,
+          ),
+        ), 
+
+      ],)
     );
 
   }

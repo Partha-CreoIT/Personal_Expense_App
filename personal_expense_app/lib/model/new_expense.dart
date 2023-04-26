@@ -104,6 +104,7 @@ class _NewExpenseState extends State<NewExpense> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Expenses'),
+        toolbarHeight: 80,
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
@@ -131,7 +132,7 @@ class _NewExpenseState extends State<NewExpense> {
                       controller: _amountController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
-                        prefixText: '\$',
+                        prefixText: '\₹',
                         labelText: 'Amount',
                       ),
                       validator: (value) {

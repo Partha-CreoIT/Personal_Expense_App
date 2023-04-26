@@ -12,28 +12,31 @@ class ExpenseItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
-          crossAxisAlignment:CrossAxisAlignment.start,
-
-
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              expense.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
             Row(
               children: [
-                Text('\$${expense.amount.toStringAsFixed(2)}'),
-                const Spacer(),
+                Icon(catIcons[expense.category]),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    expense.title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+              ],
+            ),
 
+            Row(
+              children: [
+                Text('\₹${expense.amount.toStringAsFixed(2)}'),
+                const Spacer(),
                 const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(catIcons[expense.category]),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(expense.formattedDate)
+
+                  children: [Icon(Icons.calendar_today),Text(expense.formattedDate),
+
                   ],
                 ),
               ],

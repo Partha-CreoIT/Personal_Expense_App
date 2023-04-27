@@ -41,13 +41,13 @@ class Chart extends StatelessWidget {
         horizontal: 8,
       ),
       width: double.infinity,
-      height: 180,
+      height: 240,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            Theme.of(context).colorScheme.primary.withOpacity(0.0)
+            Theme.of(context).colorScheme.primary.withOpacity(0.6),
+            Theme.of(context).colorScheme.primary.withOpacity(0.4)
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
@@ -82,10 +82,10 @@ class Chart extends StatelessWidget {
                         : Theme.of(context)
                         .colorScheme
                         .primary
-                        .withOpacity(0.7),
+                        .withOpacity(0.9),
                   ),
                 ),
-              ),
+              )
             )
                 .toList(),
           )

@@ -110,102 +110,104 @@ class _NewExpenseState extends State<NewExpense> {
         padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                maxLength: 50,
-                decoration: const InputDecoration(
-                  labelText: 'Title',
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _titleController,
+                  maxLength: 50,
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a title';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
-                  }
-                  return null;
-                },
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        prefixText: '\₹',
-                        labelText: 'Amount',
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _amountController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          prefixText: '\₹',
+                          labelText: 'Amount',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an amount';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter an amount';
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _selectedDate == null
+                                ? 'No Date Is Selected'
+                                : formatter.format(_selectedDate!),
+                          ),
+                          IconButton(
+                            onPressed: _datePicker,
+                            icon: const Icon(Icons.calendar_month),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    DropdownButton(
+                      value: _selectedCategory,
+                      items: Category.values
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e.name.toUpperCase(),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value == null) {
+                          return;
                         }
-                        return null;
+                        setState(
+                          () {
+                            _selectedCategory = value;
+                          },
+                        );
                       },
                     ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          _selectedDate == null
-                              ? 'No Date Is Selected'
-                              : formatter.format(_selectedDate!),
-                        ),
-                        IconButton(
-                          onPressed: _datePicker,
-                          icon: const Icon(Icons.calendar_month),
-                        ),
-                      ],
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text('Cancel'),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  DropdownButton(
-                    value: _selectedCategory,
-                    items: Category.values
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(
-                              e.name.toUpperCase(),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      if (value == null) {
-                        return;
-                      }
-                      setState(
-                        () {
-                          _selectedCategory = value;
-                        },
-                      );
-                    },
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: const Text('Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _submitExpenseData();
-                    },
-                    child: const Text('Save Expense'),
-                  ),
-                ],
-              ),
-            ],
+                    ElevatedButton(
+                      onPressed: () {
+                        _submitExpenseData();
+                      },
+                      child: const Text('Save Expense'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
